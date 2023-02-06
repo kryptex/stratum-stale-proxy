@@ -68,7 +68,7 @@ func handleConnection(client net.Conn, upstreamAddr string, delay int) {
 				break
 			}
 			var jsonLine jsonMessage
-			if json.Unmarshal([]byte(line), &jsonLine) == nil && jsonLine.Method == "eth_submitWork" {
+			if json.Unmarshal([]byte(line), &jsonLine) == nil && (jsonLine.Method == "eth_submitWork" || jsonLine.Method == "mining.submit") {
 				go func(line string) {
 					time.Sleep(time.Duration(delay) * time.Millisecond)
 					fmt.Printf("[Client -> Target, delayed]: %s", line)
